@@ -123,7 +123,7 @@ for bar, mean, std in zip(bars, cv_means, cv_stds):
 ax.set_xticks(x); ax.set_xticklabels(short, fontsize=11)
 ax.set_ylabel('ROC AUC', fontsize=12)
 ax.set_title('5-Fold Cross-Validation AUC Comparison', fontsize=14, fontweight='bold')
-ax.set_ylim([0.94, 0.962])
+ax.set_ylim([min(cv_means) - 0.03, max(cv_means) + 0.03])
 ax.axhline(y=0.95, color='gray', linestyle='--', alpha=0.5, label='0.95 reference')
 ax.grid(True, axis='y', alpha=0.3)
 ax.legend(fontsize=9)
