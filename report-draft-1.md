@@ -44,7 +44,7 @@ Gradient Boosting achieved the highest CV AUC (0.8872), test AUC (0.8887), accur
 
 **Figure 1: 5-Fold Cross-Validation AUC Comparison**
 
-![CV AUC Comparison](data/visualizations/cv_auc_comparison.png)
+![CV AUC Comparison](data/visualizations/cv_auc_comparison_v2.png)
 
 *Error bars indicate standard deviation across folds. All models show stable performance. The 0.95 reference line marks the target threshold.*
 
