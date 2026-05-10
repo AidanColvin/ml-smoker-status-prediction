@@ -1,9 +1,100 @@
+
+# Smoker Status Prediction · Supervised ML Pipeline
+ 
+[![Language: Python](https://img.shields.io/badge/language-python-blue.svg)](#)
+[![ML: scikit-learn](https://img.shields.io/badge/ML-scikit--learn-orange.svg)](#)
+[![Data: Korean Health Screening](https://img.shields.io/badge/data-Korean_health_screening-red.svg)](#)
+[![Models: GB · RF · LR](https://img.shields.io/badge/models-gradient_boosting_%7C_random_forest_%7C_logistic_regression-purple.svg)](#)
+[![AUC: 0.8887](https://img.shields.io/badge/AUC-0.8887-brightgreen.svg)](#)
+[![Features: LassoCV Selected](https://img.shields.io/badge/features-LassoCV_selected-yellowgreen.svg)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+ 
+Predicts whether a patient is a smoker using 15 routine clinical biomarkers. No self-reported tobacco data. Trains and compares three supervised models on synthetic Korean health screening data.
+ 
+---
+ 
+## The Problem
+ 
+Smokers often deny tobacco use in clinical settings. Published estimates put the denial rate at 20 to 30 percent. If routine lab work can predict smoking status, clinicians can identify at-risk patients who deny tobacco use and intervene earlier.
+ 
+---
+ 
+## What the Model Does
+ 
+Three supervised models are trained and compared on the same feature set.
+ 
+| Model | Approach |
+|-------|----------|
+| Gradient Boosting | Fits each tree to residual errors of the current ensemble |
+| Random Forest | Builds many decorrelated trees via bootstrap sampling |
+| Logistic Regression | Interpretable baseline with Ridge regularization and cubic splines |
+ 
+Gradient Boosting was selected as the final model. It achieved the highest AUC and lowest false negative rate.
+ 
+---
+ 
+## Key Findings
+ 
+- Routine lab work alone can distinguish smokers from non-smokers at AUC 0.8887
+- Hemoglobin is the dominant predictor. Smoking triggers compensatory red blood cell production, raising hemoglobin measurably
+- Height ranks second as a sex proxy. The dataset has no explicit sex field
+- All three models exceeded AUC 0.87. The limiting factor is the feature set, not the algorithm
+- At a decision threshold of 0.35, recall exceeds 0.85, making the model viable for population screening
+---
+ 
+## Pipeline
+ 
+```
+15,000 synthetic observations (24 raw features)
+        |
+Z-score standardization (fit on train only)
+        |
+LassoCV feature selection > drops 7 features > retains 15
+        |
+Gradient Boosting   > AUC 0.8887, Recall 78.8%
+Random Forest       > AUC 0.8841, Recall 78.1%
+Logistic Regression > AUC 0.8794, Recall 72.5%
+        |
+5-fold stratified cross-validation scored by AUC
+```
+ 
+---
+ 
+## Results
+ 
+| Model | CV AUC | Test AUC | Recall | F1 |
+|-------|--------|----------|--------|----|
+| Gradient Boosting | 0.8872 | **0.8887** | **78.8%** | **0.750** |
+| Random Forest | 0.8832 | 0.8841 | 78.1% | 0.739 |
+| Logistic Regression | 0.8670 | 0.8794 | 72.5% | 0.719 |
+ 
+---
+ 
+## Stack
+ 
+`Python 3.14` `scikit-learn` `pandas` `numpy` `scipy` `matplotlib` `LassoCV` `GridSearchCV`
+ 
+---
+ 
+## Repo Structure
+ 
+```
+src/          model pipeline and preprocessing
+data/         feature descriptions
+report.pdf    full write-up with all results and figures
+README.md
+```
+ 
+---
+ 
+# Full Report
+
+
 # Smoker Status Prediction Using Clinical Biomarkers and Ensemble Machine Learning
 
 **Course:** Data Mining — Final Project Report  
 **Author:** Aidan Colvin, UNC Chapel Hill  
 **Repository:** github.com/AidanColvin/ml-smoker-status-prediction  
-**Note:** Generative AI provided limited assistance in line with the course policy on usage of AI.
 
 ---
 
